@@ -3,7 +3,7 @@
 //
 
 //
-// Copyright (c) 2001-2020, Andrew Aksyonoff
+// Copyright (c) 2001-2021, Andrew Aksyonoff
 // Copyright (c) 2011-2016, Sphinx Technologies Inc
 // All rights reserved
 //
@@ -27,7 +27,8 @@ extern "C" {
 #endif
 
 /// current udf version
-#define SPH_UDF_VERSION 14
+/// NOTE: when changing FACTORS() blob, do not forget to bump master-agent protocol, too!
+#define SPH_UDF_VERSION 17
 
 /// error buffer size
 #define SPH_UDF_ERROR_LEN 256
@@ -115,6 +116,14 @@ typedef struct st_sphinx_field_factors
 	int				is_latin_hits;		///< added in v.14
 	int				is_number_hits;		///< added in v.14
 	int				has_digit_hits;		///< added in v.14
+	float			trf_qt;				///< added in v.15
+	float			trf_i2u;			///< added in v.15
+	float			trf_i2q;			///< added in v.15
+	float			trf_i2f;			///< added in v.15
+	float			trf_aqt;			///< added in v.15
+	float			trf_naqt;			///< added in v.15
+	float			phrase_decay10;		///< added in v.17
+	float			phrase_decay30;		///< added in v.17
 } SPH_UDF_FIELD_FACTORS;
 
 /// unpacked representation of all the term-level ranking factors
@@ -232,7 +241,15 @@ enum sphinx_field_factor
 	SPH_FIELDF_IS_NOUN_HITS			= 16,	///< v.14, unsigned int
 	SPH_FIELDF_IS_LATIN_HITS		= 17,	///< v.14, unsigned int
 	SPH_FIELDF_IS_NUMBER_HITS		= 18,	///< v.14, unsigned int
-	SPH_FIELDF_HAS_DIGIT_HITS		= 19	///< v.14, unsigned int
+	SPH_FIELDF_HAS_DIGIT_HITS		= 19,	///< v.14, unsigned int
+	SPH_FIELDF_TRF_QT				= 20,	///< v.15, float
+	SPH_FIELDF_TRF_I2U				= 21,	///< v.15, float
+	SPH_FIELDF_TRF_I2Q				= 22,	///< v.15, float
+	SPH_FIELDF_TRF_I2F				= 23,	///< v.15, float
+	SPH_FIELDF_TRF_AQT				= 24,	///< v.15, float
+	SPH_FIELDF_TRF_NAQT				= 25,	///< v.15, float
+	SPH_FIELDF_PHRASE_DECAY10		= 26,	///< v.17, float
+	SPH_FIELDF_PHRASE_DECAY30		= 27	///< v.17, float
 };
 
 
